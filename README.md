@@ -7,3 +7,19 @@ The repo contains:
 * [template.tex](./template.tex) - TeX file with sample features.
 * [zapiski.cls](./zapiski.cls) - CLS file.
 * [pic/model.png](pic/model.png) - sample image to include.
+
+
+Here is an example for \author tag:
+```tex
+\author{
+  \textbf{Ivan Ivanov\textsuperscript{1}},
+  \textbf{Pert Petrov\textsuperscript{2}}
+\\
+  \textsuperscript{1}Institution 1,
+  \textsuperscript{2}Institution 2
+\\
+  \small{
+    \textbf{Correspondence:} \href{ivanov@institution1.org}{ivanov@institution1.org}
+  }
+}
+```
