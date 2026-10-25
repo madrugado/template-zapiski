@@ -1,64 +1,65 @@
-# Как следовать шаблону «Записок научных семинаров ПОМИ»
+# How to follow the Zapiski POMI template
 
-Вёрстку статьи задают два файла этого репозитория: `zapiski.cls` (класс) и
-`template.tex` (каркас статьи-примера). Готовя статью для журнала (или том по
-статьям конференции), следуй правилам ниже. Эталон вёрстки — опубликованный том,
-например https://www.pdmi.ras.ru/znsl/2026/v552.html
+Two files in this repository define the article layout: `zapiski.cls` (the class)
+and `template.tex` (a sample article skeleton). When preparing an article for
+Zapiski Nauchnykh Seminarov POMI («Записки научных семинаров ПОМИ») — or a volume
+compiled from conference papers — follow the rules below. The layout reference is
+a published volume, e.g. https://www.pdmi.ras.ru/znsl/2026/v552.html
 
-## Каркас статьи
+## Article skeleton
 
 ```latex
-\documentclass{zapiski}                    % без опций
+\documentclass{zapiski}                    % no options
 \usepackage[cp1251]{inputenc}
 \usepackage[T2A]{fontenc}
 \usepackage[russian,english]{babel}
-% ... содержательные пакеты статьи (amsmath, graphicx, booktabs, url, hyperref, tikz, ...) ...
-\english                                   % до \begin{document} — режим англоязычной статьи
+% ... content packages of the article (amsmath, graphicx, booktabs, url, hyperref, tikz, ...) ...
+\english                                   % before \begin{document} — English-language article mode
 \begin{document}
-\originfo{NNN}{}{}{ГОД}                    % номер тома и дату задаёт редакция
-\setcounter{page}{1}                       % стартовые страницы расставит редакция
-\date{}                                    % дату «Поступило…» впишет редакция
+\originfo{NNN}{}{}{YEAR}                   % volume number and dates are set by the editorial board
+\setcounter{page}{1}                       % starting pages are assigned by the editorial board
+\date{}                                    % the "Received ..." date is inserted by the editorial board
 \title[Short Title]{Full Title of the Paper}
-\author[K.~Ivanov]{Konstantin Ivanov}      % [краткое для колонтитула]{полное имя}
+\author[K.~Ivanov]{Konstantin Ivanov}      % [short name for the running head]{full name}
 \address[K.~Ivanov]{Institution, City, Country}
-\email{ivanov@inst.ru}                     % e-mail должен быть у КАЖДОГО автора
+\email{ivanov@inst.ru}                     % EVERY author must have an e-mail
 \begin{abstract}...\end{abstract}
-\keywords{kw1 \and kw2.}                   % разделитель \and, как в template.tex
+\keywords{kw1 \and kw2.}                   % \and separator, as in template.tex
 \maketitle
-... текст ...
+... text ...
 \begin{thebibliography}{99}
 \bibitem{...}
 ...
 \end{thebibliography}
 \end{document}
-% после \end{document} — русский блок: авторы (И.~Фамилия), русское название,
-% \begin{abstract} — перевод аннотации, при наличии русские \keywords{}
+% after \end{document} — the Russian block: authors (I.~Surname), Russian title,
+% \begin{abstract} with the Russian translation of the abstract, Russian \keywords{} if available
 ```
 
-## Правила
+## Rules
 
-1. **Кодировка всех `.tex`/`.cls` — строго CP1251.** Файлы в UTF-8 конвертировать
-   `iconv -f utf-8 -t cp1251`, предварительно заменив непредставимые в CP1251
-   символы на макросы (`≈` → `$\approx$`, `—` → `---`, `–` → `--` и т.п.).
-2. **Класс — только этот `zapiski.cls`**, копировать в статью побайтово. Локальные
-   классы из авторских архивов не использовать и ничего в классе не менять.
-3. **Лишние пакеты и хаки убирать**: `geometry`, `fontspec`, переопределения
-   `\publnamef`/`\publnames`/`\russianvolinfo`, `\UDC` (в классе не печатается),
-   самодельные `\def\@evenhead...` и прочие хаки колонтитулов, опции `utf8`/`unicode`
-   у inputenc/hyperref. Вёрстку задаёт только класс.
-4. **Список литературы** (`thebibliography`) — в алфавитном порядке по фамилии
-   первого автора (как и требует `template.tex`); нумерация и `\cite` обновятся
-   сами после 2–3 проходов `pdflatex`.
-5. **Русский блок — после `\end{document}`**: авторы, русское название, русская
-   аннотация (`abstract`), при наличии русские `\keywords{}`. Так же устроен сам
-   `template.tex`.
-6. **Не задавать самому**: номер тома (`\originfo`), стартовую страницу, дату
-   «Поступило» — их ставит редакция тома.
-7. **Компиляция**: `pdflatex` 2–3 прохода; проверять лог на missing references
-   и overfull.
+1. **All `.tex`/`.cls` files must be strictly CP1251-encoded.** Convert UTF-8 files
+   with `iconv -f utf-8 -t cp1251`, after replacing characters not representable in
+   CP1251 with macros (`≈` → `$\approx$`, `—` → `---`, `–` → `--`, etc.).
+2. **Use only this `zapiski.cls`**, copied into the article byte-for-byte. Do not use
+   local class files from author archives and do not modify the class.
+3. **Remove extraneous packages and hacks**: `geometry`, `fontspec`, redefinitions of
+   `\publnamef`/`\publnames`/`\russianvolinfo`, `\UDC` (not printed by the class),
+   homemade `\def\@evenhead...` and other running-header hacks, `utf8`/`unicode`
+   options of inputenc/hyperref. The page layout is defined by the class only.
+4. **The bibliography** (`thebibliography`) must be sorted alphabetically by the
+   surname of the first author (as `template.tex` itself requires); numbering and
+   `\cite` resolve automatically after 2–3 pdflatex runs.
+5. **The Russian block goes after `\end{document}`**: authors, Russian title,
+   Russian abstract (`abstract`), Russian `\keywords{}` if available. `template.tex`
+   is arranged the same way.
+6. **Do not set yourself**: the volume number (`\originfo`), the starting page,
+   the "Received" date — these are assigned by the editorial board of the volume.
+7. **Compilation**: `pdflatex`, 2–3 runs; check the log for missing references
+   and overfull boxes.
 
-## Проверка
+## Checklist
 
-Перед сдачей: все файлы корректно декодируются как CP1251 (`iconv`), все `\cite`
-резолвятся по `thebibliography`, русский блок после `\end{document}` на месте,
-вёрстка страниц визуально соответствует эталонному тому.
+Before submission: every file decodes cleanly as CP1251 (`iconv`), every `\cite`
+resolves against `thebibliography`, the Russian block after `\end{document}` is in
+place, and the rendered pages visually match the reference volume.
